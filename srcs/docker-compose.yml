@@ -1,0 +1,63 @@
+
+version: '3.8'
+
+networks:
+  intra:
+    driver: bridge
+    name: intra
+    
+volumes:
+  md-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bcho/data/mariadb
+  wp-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/bcho/data/wordpress
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - md-data:/var/lib/mysql
+    networks:
+      - intra
+    env_file:
+      - .env
+    restart: always
+
+  wordpress:
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    build: requirements/wordpress
+    volumes:
+      - wp-data:/var/www/html/wordpress
+    networks:
+      - intra
+    env_file:
+      - .env
+    restart: always
+    expose:
+      - "9000"
+
+  nginx:
+    depends_on:
+      - wordpress
+    container_name: nginx
+    build: requirements/nginx
+    volumes:
+      - wp-data:/var/www/html/wordpress
+    networks:
+      - intra
+    env_file:
+      - .env
+    restart: always 
+    ports:
+      - "443:443"
