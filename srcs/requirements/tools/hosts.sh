@@ -14,11 +14,11 @@ fi
 LINE=$(grep -cx "${conf}" "${hosts_path}")
 
 if [ ${LINE} -eq 0 ]; then
-    echo -e "${RED}--------------------
+     echo -e "${RED}--------------------
 Error: Failed to add ${conf} to ${hosts_path}.
 --------------------${RESET}" >&2
 else
-    echo -e "${GREEN}--------------------
+     echo -e "${GREEN}--------------------
 Success: ${conf} added to ${hosts_path}.
 --------------------${RESET}"
 fi

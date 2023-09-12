@@ -1,9 +1,11 @@
 #!/bin/bash
 
 volume_path="/home/bcho/data"
-if [ "$(uname)" == "Darwin" ]; then
-    volume_path="/Users/bcho/goinfree/docker_study/inception2/data"
-fi
+
+#if [ "$(uname)" == "Darwin" ]; then
+#    volume_path="/Users/bcho/goinfree/docker_study/inception2/data"
+#fi
+
 wordpress_path="${volume_path}/wordpress"
 mariadb_path="${volume_path}/mariadb"
 
